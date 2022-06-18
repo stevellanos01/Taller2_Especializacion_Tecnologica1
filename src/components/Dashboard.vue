@@ -72,4 +72,19 @@ h1 {
 .resultado {
   color: red;
 }
+button {
+  margin-top: 15px;
+  padding: 3px 25px 3px 25px;
+  color: red;
+  background-color: rgb(28, 31, 46);
+  font-size: 1.5em;
+  outline: none;
+  border-radius: 5px;
+  border: 0px solid white;
+  cursor: pointer;
+  animation: border 3s ease-in-out;
+}
+button:active {
+  border: 1px solid white;
+}
 </style>
