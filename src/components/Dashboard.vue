@@ -48,5 +48,28 @@ export default {
 </script>
 
 <style scoped>
-
+.row {
+  display: grid;
+  grid-template:
+    "a a a"
+    "b b b"
+    "c c c";
+  gap: 10px;
+}
+h1 {
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 3em;
+}
+.container {
+  max-width: 400px;
+  margin: auto;
+}
+.estado {
+  color: black;
+  font-size: 1.7em;
+}
+.resultado {
+  color: red;
+}
 </style>
