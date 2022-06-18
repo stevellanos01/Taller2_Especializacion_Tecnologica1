@@ -20,7 +20,7 @@
           />
         </div>
       </div>
-      <button>
+      <button @click="limpiar">
         <h3>Limpiar</h3>
       </button>
     </div>
@@ -84,7 +84,7 @@ export default {
       return false;
     },
     evaluar() {
-      // Aquí viene la lógica principal del gato
+      // Aquí viene la lógica principal del juego
 
       let empate = true; // inicialmente empate será cierto
       for (let i = 0; i < 3; i++) {
@@ -101,6 +101,14 @@ export default {
         return;
       }
       if (empate) this.win = "E";
+    },
+    limpiar() {
+      this.tablero = [
+        ["", "", ""],
+        ["", "", ""],
+        ["", "", ""],
+      ];
+      this.win = "";
     },
   },
   components: {
