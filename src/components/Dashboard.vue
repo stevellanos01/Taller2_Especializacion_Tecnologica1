@@ -23,12 +23,14 @@
       <button @click="limpiar">
         <h3>Limpiar</h3>
       </button>
+      <scoreboard :score="score" />
     </div>
   </div>
 </template>
 
 <script>
 import cell from "./Cell.vue";
+import scoreboard from "./Scoreboard.vue";
 
 export default {
   name: "juego",
@@ -113,6 +115,7 @@ export default {
   },
   components: {
     cell,
+    scoreboard,
   },
   computed: {
     turno() {
