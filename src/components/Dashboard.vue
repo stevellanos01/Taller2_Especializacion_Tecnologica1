@@ -3,14 +3,21 @@
     <div class="container">
       <h1>GATO GAME</h1>
       <h2 class="estado">
-        <span  class="resultado">
+        <span v-if="resultado" class="resultado">
           Resultado:
+          {{ resultado }}
         </span>
-        <span > Turno:</span>
+        <span v-else> Turno: {{ turno }}</span>
       </h2>
       <div v-for="(row, n) in tablero" :key="n" class="row">
         <div v-for="(box, m) in row" :key="m">
-          <cell/>
+          <cell
+            :valor="box"
+            :posicionX="n"
+            :posicionY="m"
+            :turno="current"
+            @hit="record"
+          />
         </div>
       </div>
       <button>
@@ -39,10 +46,77 @@ export default {
     };
   },
   methods: {
+    record(posicion) {
+      if (!!this.resultado || this.tablero[posicion[0]][posicion[1]] !== "")
+        return;
+      this.tablero[posicion[0]][posicion[1]] = this.turno;
+      this.evaluar();
+      this.toggle();
+    },
+    toggle() {
+      this.current = !this.current;
+    },
+    check() {
+      // comprobar horizontal y vertical
+      for (let i = 0; i < 3; i++)
+        if (
+          (this.tablero[i][1] !== "" &&
+            this.tablero[i][0] === this.tablero[i][1] &&
+            this.tablero[i][1] === this.tablero[i][2]) ||
+          (this.tablero[1][i] !== "" &&
+            this.tablero[0][i] === this.tablero[1][i] &&
+            this.tablero[1][i] === this.tablero[2][i])
+        )
+          return true;
+      return false;
+    },
+    checkDiagonal() {
+      // comprobar celdas en diagonales
+      if (
+        (this.tablero[1][1] !== "" &&
+          this.tablero[0][0] === this.tablero[1][1] &&
+          this.tablero[1][1] === this.tablero[2][2]) ||
+        (this.tablero[1][1] !== "" &&
+          this.tablero[2][0] === this.tablero[1][1] &&
+          this.tablero[1][1] === this.tablero[0][2])
+      )
+        return true;
+      return false;
+    },
+    evaluar() {
+      // Aquí viene la lógica principal del gato
 
+      let empate = true; // inicialmente empate será cierto
+      for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++)
+          if (this.tablero[i][j] === "") {
+            empate = false; // si alguna celda está en blanco, no hay empate
+            break;
+          }
+        if (!empate) break;
+      }
+      if (this.check() || this.checkDiagonal()) {
+        this.win = this.turno;
+        this.score[this.turno]++;
+        return;
+      }
+      if (empate) this.win = "E";
+    },
   },
   components: {
-    cell
+    cell,
+  },
+  computed: {
+    turno() {
+      return this.current ? "O" : "X";
+    },
+    resultado() {
+      return this.win !== ""
+        ? ["X", "O"].includes(this.win)
+          ? `${this.win} Win`
+          : "Empate"
+        : false;
+    },
   },
 };
 </script>
