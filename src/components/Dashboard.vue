@@ -23,7 +23,8 @@
       <button @click="limpiar">
         <h3>Limpiar</h3>
       </button>
-      <scoreboard :score="score" />
+      <!--<scoreboard :score="score" /> -->
+        <scoreboard/>
     </div>
   </div>
 </template>
@@ -31,6 +32,9 @@
 <script>
 import cell from "./Cell.vue";
 import scoreboard from "./Scoreboard.vue";
+
+import { useScoreGame}  from '../stores/counter';
+//const scoreGame = useScoreGame();
 
 export default {
   name: "juego",
@@ -44,7 +48,7 @@ export default {
       ],
       current: true,
       win: "",
-      score: { O: 0, X: 0 },
+      //score: { O: 0, X: 0 },
     };
   },
   methods: {
@@ -99,7 +103,8 @@ export default {
       }
       if (this.check() || this.checkDiagonal()) {
         this.win = this.turno;
-        this.score[this.turno]++;
+        useScoreGame().incrementScore(this.win);
+        //this.score[this.turno]++;
         return;
       }
       if (empate) this.win = "E";

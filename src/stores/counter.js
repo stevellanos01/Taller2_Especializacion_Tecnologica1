@@ -1,16 +1,18 @@
 import { defineStore } from 'pinia'
 
-export const useCounterStore = defineStore({
+export const useScoreGame = defineStore({
   id: 'counter',
   state: () => ({
-    counter: 0
+      userO: 0,
+      userX: 0
   }),
-  getters: {
-    doubleCount: (state) => state.counter * 2
-  },
   actions: {
-    increment() {
-      this.counter++
+    incrementScore(win) {
+      if (win === 'O') {
+        this.userO += 1;
+      }else if (win === 'X') {
+        this.userX += 1;
+      } 
     }
   }
 })

@@ -7,18 +7,22 @@
         <th>X</th>
       </tr>
       <tr>
-        <td>{{ score.O }}</td>
-        <td>{{ score.X }}</td>
+        <td>{{ scoreGame.userO }}</td>
+        <td>{{ scoreGame.userX }}</td>
       </tr>
     </table>
   </div>
 </template>
 
-<script>
+<script setup>
+import { useScoreGame}  from '../stores/counter';
+const scoreGame = useScoreGame();
+/*
 export default {
   name: "Scoreboard",
-  props: ["score"],
+  //props: ["score"],
 };
+*/
 </script>
 
 <style scoped>
